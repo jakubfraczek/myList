@@ -1,6 +1,8 @@
 package myList;
 
-public class MyNode {
+import org.apache.commons.lang3.builder.CompareToBuilder;
+
+public class MyNode implements Comparable<Object> {
 
 	private Object mValue = null;
 	private MyNode mNext = null;
@@ -27,6 +29,13 @@ public class MyNode {
 
 	void setNext(MyNode mNext) {
 		this.mNext = mNext;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		
+	   return CompareToBuilder.reflectionCompare(this, o);
+
 	}
 
 }

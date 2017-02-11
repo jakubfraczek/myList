@@ -1,5 +1,7 @@
 package myList;
 
+import javax.swing.tree.MutableTreeNode;
+
 public class MyList {
 
 	private MyNode mHead = new MyNode();
@@ -192,19 +194,58 @@ public class MyList {
 
 	public MyList sort() {
 		MyList out = new MyList();
-		
+		MyNode temp = mHead;
+		MyNode[] in = new MyNode[mListSize];
+		for (int i = 0; i < mListSize; i++) {
+			in[i] = temp;
+			temp = temp.getNext();
+		}		
+		quickSortInner(in, 0, in.length - 1);	
+				
+		for(MyNode i : in) {
+			out.add(i.getValue());
+		}
 		return out;
 	}
 
+	private void quickSortInner(MyNode[] out, int low, int high) {
+		if (low < high) {
+			int p = partition(out, low, high);
+			quickSortInner(out, low, p - 1);
+			quickSortInner(out, p + 1, high);
+		}
+	}
+
+	private int partition(MyNode[] out, int low, int high) {
+		MyNode pivot = out[high];
+		int i = low;
+		MyNode temp;
+
+		for (int j = low; j <= (high - 1); j++) {
+			if (out[j].compareTo(pivot) > 0) {
+				temp = out[i];
+				out[i] = out[j];
+				out[j] = temp;
+				i += 1;
+			}
+		}
+		temp = out[i];
+		out[i] = out[high];
+		out[high] = temp;
+		return i;
+	}
+	
 	public boolean isSorted() {
-		boolean flag = false;
+		boolean flag = true;
 		MyNode temp = mHead;
-//		while (temp != null) {
-//			if (temp.getNext() != null){
-//				
-//			}
-//		}
-		
+		while (temp != null) {
+			if (temp.getNext() != null && temp.compareTo(temp.getNext()) < 0) {
+				flag = false;
+				break;
+			}
+			temp = temp.getNext();
+		}
+
 		return flag;
 	}
 

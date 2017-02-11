@@ -2,7 +2,6 @@ package myListTests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -187,10 +186,17 @@ public class MyListTest {
 
 	@Test
 	public void sortTest() {
-		myUnsortedList.write();
 		myEmptyList = myUnsortedList.sort();
 		assertTrue(myEmptyList.isSorted());
-//		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void sortStringsTest() {
+		myStringList.write();
+		System.out.println("=============================");
+		myEmptyList = myStringList.sort();
+		myEmptyList.write();
+		assertTrue(myEmptyList.isSorted());
 	}
 
 	@Test

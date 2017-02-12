@@ -1,6 +1,7 @@
 package myListTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -192,10 +193,7 @@ public class MyListTest {
 	
 	@Test
 	public void sortStringsTest() {
-		myStringList.write();
-		System.out.println("=============================");
 		myEmptyList = myStringList.sort();
-		myEmptyList.write();
 		assertTrue(myEmptyList.isSorted());
 	}
 
@@ -235,6 +233,18 @@ public class MyListTest {
 		assertEquals(2, myStringList.length());
 		assertEquals("Kuba", myStringList.getValue(0));
 		assertEquals("Jakub", myStringList.getValue(1));
+	}
+	
+	@Test
+	public void containsStringTest() {
+		assertTrue(myStringList.contains("Kuba"));
+		assertFalse(myStringList.contains("Justyna"));
+	}
+	
+	@Test
+	public void containsIntTest() {
+		assertTrue(myIntList.contains(21));
+		assertFalse(myIntList.contains(42));
 	}
 
 }

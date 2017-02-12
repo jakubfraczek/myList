@@ -249,4 +249,18 @@ public class MyList {
 		return mListSize == 0;
 	}
 
+	public boolean contains(Object value) {
+		boolean flag = false;
+		MyNode temp = mHead;
+		while (temp != null) {
+			if(temp.getValue() == value){
+				flag = true;
+				break;
+			} else {
+				temp = temp.getNext();
+			}
+		}
+		return flag;
+	}
+
 }

@@ -1,18 +1,12 @@
 package myList;
 
-import javax.swing.tree.MutableTreeNode;
-
 public class MyList {
 
 	private MyNode mHead = new MyNode();
 	private int mListSize = 0;
 
-	private MyNode begin() {
-		return mHead;
-	}
-
 	private MyNode last() {
-		MyNode temp = begin();
+		MyNode temp = mHead;
 		while (temp.getNext() != null) {
 			temp = temp.getNext();
 		}
@@ -54,7 +48,8 @@ public class MyList {
 			mListSize--;
 		} else {
 			MyNode beforeNode = findeNodeAtIndex(index - 1);
-			beforeNode.setNext(findeNodeAtIndex(index + 1));
+			MyNode node = beforeNode.getNext();
+			beforeNode.setNext(node.getNext());
 			mListSize--;
 		}
 	}
@@ -88,8 +83,9 @@ public class MyList {
 	}
 
 	public void addAtIndex(int index, Object value) {
-		MyNode temp = new MyNode(value, findeNodeAtIndex(index - 1).getNext());
-		findeNodeAtIndex(index - 1).setNext(temp);
+		MyNode beforeNode = findeNodeAtIndex(index - 1);
+		MyNode temp = new MyNode(value, beforeNode.getNext());
+		beforeNode.setNext(temp);
 		mListSize++;
 	}
 
@@ -110,7 +106,7 @@ public class MyList {
 	public MyList getAllIndexesOf(Object value) {
 		int index = 0;
 		MyList out = new MyList();
-		MyNode temp = begin();
+		MyNode temp = mHead;
 		while (temp != null) {
 			if (temp.getValue().equals(value)) {
 				out.add(index);
@@ -129,7 +125,7 @@ public class MyList {
 
 	private MyNode findeNodeAtIndex(int index) {
 		isOutOfBounds(index);
-		MyNode temp = begin();
+		MyNode temp = mHead;
 		for (int i = 0; i < index; i++) {
 			temp = temp.getNext();
 		}
@@ -199,20 +195,20 @@ public class MyList {
 		for (int i = 0; i < mListSize; i++) {
 			in[i] = temp;
 			temp = temp.getNext();
-		}		
-		quickSortInner(in, 0, in.length - 1);	
-				
-		for(MyNode i : in) {
+		}
+		quickSort(in, 0, in.length - 1);
+
+		for (MyNode i : in) {
 			out.add(i.getValue());
 		}
 		return out;
 	}
 
-	private void quickSortInner(MyNode[] out, int low, int high) {
+	private void quickSort(MyNode[] out, int low, int high) {
 		if (low < high) {
 			int p = partition(out, low, high);
-			quickSortInner(out, low, p - 1);
-			quickSortInner(out, p + 1, high);
+			quickSort(out, low, p - 1);
+			quickSort(out, p + 1, high);
 		}
 	}
 
@@ -234,7 +230,7 @@ public class MyList {
 		out[high] = temp;
 		return i;
 	}
-	
+
 	public boolean isSorted() {
 		boolean flag = true;
 		MyNode temp = mHead;
